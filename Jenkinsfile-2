@@ -1,7 +1,9 @@
 pipeline {
 	agent {
-		label 'docker'
-		docker { image 'liquibase/liquibase:4.4.2' }
+		docker {
+			label 'docker'
+			image 'liquibase/liquibase:4.4.2'
+		}
 	}
 	environment {
 		DB_CREDS=credentials('ora-db-lb')
