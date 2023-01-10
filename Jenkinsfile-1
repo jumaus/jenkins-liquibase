@@ -1,8 +1,8 @@
 pipeline {
 	agent {
-    	docker {
-    		label 'docker'
-    		image 'liquibase/liquibase:4.4.2'
+		docker {
+			label 'docker'
+			image 'liquibase/liquibase:4.4.2'
 		}
 	}
 	stages {
