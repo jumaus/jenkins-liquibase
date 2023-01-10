@@ -1,0 +1,25 @@
+pipeline {
+  agent {
+    docker { image 'liquibase/liquibase:4.4.2' }
+  }
+  environment {
+    DB_CREDS=credentials('ora-db-lb')
+  }
+  stages {
+    stage('Status') {
+      steps {
+        sh 'liquibase status --url="jdbc:oracle:thin:@10.0.10.12/orcl" --changeLogFile=my_app-wrapper.xml --username=$DB_CREDS_USR --password=$DB_CREDS_PSW'
+      }
+    }
+    stage('Update') {
+      steps {
+        sh 'liquibase update --url="jdbc:oracle:thin:@10.0.10.12/orcl" --changeLogFile=my_app-wrapper.xml --username=$DB_CREDS_USR --password=$DB_CREDS_PSW'
+      }
+    }
+  }
+  post {
+    always {
+      cleanWs()
+    }
+  }
+}
